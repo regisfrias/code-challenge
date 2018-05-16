@@ -1,0 +1,33 @@
+{
+  "name": "@motleyagency/code-challenge",
+  "version": "1.0.0",
+  "description": "Motley's code challenge",
+  "scripts": {
+    "precommit": "lerna run --concurrency 1 --stream precommit",
+    "publish": "lerna publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/motleyagency/code-challenge.git"
+  },
+  "keywords": [
+    "interview",
+    "react",
+    "graphql",
+    "rest",
+    "test"
+  ],
+  "author": "Pete Nykänen <pete@motley.fi>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/motleyagency/code-challenge/issues"
+  },
+  "homepage": "https://motley.fi",
+  "dependencies": {
+    "husky": "^0.14.3",
+    "lerna": "^2.11.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
