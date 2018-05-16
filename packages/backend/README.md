@@ -49,9 +49,6 @@ Result:
 
 ### Hints
 
-* This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app), so if you are familiar
-  with CRA, you are in luck! Otherwise you might want to [get familiar with it first](<(https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md)>).
-
 * The tests are done with [Jest](https://facebook.github.io/jest/) but you can use the test runner of your choice if needed.
 
 * You'll need [a GitHub account to get the API token](https://developer.github.com/v3/auth/#basic-authentication). See [settings/tokens](https://github.com/settings/tokens).
