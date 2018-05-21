@@ -4,8 +4,7 @@ This code challenge tests your backend skills.
 
 ## Scenario
 
-We really really urgently need a sweet list of your public GitHub Repos, but someone left it half
-finished! Oh no! Your task is to:
+We had a super GDPR compliant server for a list of fake users, but someone deleted the implementation! Oh no! Your task is to:
 
 1.  Read this `README`
 2.  Install dependencies with `yarn` or `npm` (we usually use `yarn`)
