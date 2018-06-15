@@ -1,12 +1,23 @@
 import React from 'react';
-import /**/ from 'redux';
-import /**/ from 'react-redux';
-import /**/ from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import RepoList from './containers/RepoList';
 import ErrorBoundary from './components/ErrorBoundary';
 import reducers from './reducers';
 
-// @TODO - Setup redux with redux-thunk
+const middleware = [thunk];
+const initialState = {};
+
+const store = createStore(
+  reducers,
+  initialState,
+  compose(
+    applyMiddleware(...middleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
+  ),
+);
 
 const App = () => (
   <Provider store={store}>

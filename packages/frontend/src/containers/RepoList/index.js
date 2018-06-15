@@ -54,6 +54,8 @@ RepoListContainer.defaultProps = {
   data: null,
 };
 
-const mapStateToProps = /* TODO: mapStateToProps should get the repo data from the store */
+const mapStateToProps = state => ({
+  username: state.username,
+});
 
 export default connect(mapStateToProps)(RepoListContainer);

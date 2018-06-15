@@ -6,7 +6,13 @@
     "type": "git",
     "url": "git+https://github.com/motleyagency/code-challenge.git"
   },
-  "keywords": ["interview", "react", "graphql", "rest", "test"],
+  "keywords": [
+    "interview",
+    "react",
+    "graphql",
+    "rest",
+    "test"
+  ],
   "author": "Pete Nykänen <pete@motley.fi>",
   "license": "MIT",
   "bugs": {
@@ -22,7 +28,10 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "redux-mock-store": "^1.5.1",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^3.2.6"
   },
   "devDependencies": {
