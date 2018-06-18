@@ -12,10 +12,9 @@ const languageColors = {
 };
 const RepoList = props => {
   const { data, username } = props;
-  console.log(props);
 
-  const repos = data.map(repo => (
-    <div key={repo.id}>
+  const repos = data.map((repo, key) => (
+    <div key={key}>
       <h2>
         <a src={repo.html_url} target="_blank">
           {repo.name}

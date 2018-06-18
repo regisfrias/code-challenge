@@ -30,7 +30,8 @@ export const fetchUserRepos = username => async (dispatch, getState) => {
   // @TODO: We must handle pagination too...
   // https://developer.github.com/v3/guides/traversing-with-pagination/
   // parse-link-header package looks nice?
-  // @TODO we want to get the `nextPage` from state?
+
+  console.log('state.nextPage', state.nextPage);
 
   dispatch(fetchStart());
 
@@ -41,7 +42,7 @@ export const fetchUserRepos = username => async (dispatch, getState) => {
       }`,
     )
       .then(res => res.json())
-      .then(data => dispatch(fetchSuccess({ nextPage: 2, data })));
+      .then(data => dispatch(fetchSuccess({ nextPage: state.nextPage, data })));
   } catch (error) {
     dispatch(fetchError(error.message));
   }
