@@ -1,3 +1,5 @@
+import parseLinkHeaders from 'parse-link-header';
+
 export const FETCH_START = '@fetch/start';
 export const FETCH_ERROR = '@fetch/error';
 export const FETCH_SUCCESS = '@fetch/success';
@@ -11,11 +13,10 @@ const fetchError = error => ({
   error,
 });
 
-const fetchSuccess = ({ nextPage, data, isLastPage }) => ({
+const fetchSuccess = ({ nextPage, data }) => ({
   type: FETCH_SUCCESS,
   nextPage,
   data,
-  isLastPage,
 });
 
 /**
@@ -32,30 +33,23 @@ export const fetchUserRepos = username => async (dispatch, getState) => {
     state.nextPage
   }`;
 
+  const linkHeader = '<' + url + '>; rel="next"';
+
+  const parsed = parseLinkHeaders(linkHeader);
+
   try {
-    fetch(url)
-      .then(res => {
-        let isLastPage = false;
-
-        for (const value of res.headers.values()) {
-          if (value.indexOf('first') >= 0) {
-            isLastPage = true;
-          }
-        }
-
-        return { data: res.json(), isLastPage };
-      })
-      .then(res =>
-        res.data.then(data =>
-          dispatch(
-            fetchSuccess({
-              nextPage: state.nextPage,
-              data: data,
-              isLastPage: res.isLastPage,
-            }),
-          ),
-        ),
-      );
+    fetch(parsed.next.url)
+      .then(res => res.json())
+      .then(data => {
+        const nextPage =
+          data.length > 0 ? parseInt(parsed.next.page) + 1 : null;
+        dispatch(
+          fetchSuccess({
+            nextPage,
+            data: data,
+          }),
+        );
+      });
   } catch (error) {
     dispatch(fetchError(error.message));
   }

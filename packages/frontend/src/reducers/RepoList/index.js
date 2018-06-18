@@ -24,16 +24,14 @@ export default (state = initialState, action) => {
         error: action.error,
       };
     }
-    // @TODO: Implement FETCH_SUCCESS handler. On success, you should apply proper loading/error
-    // states, and adjust the other data/variables needed for the container in containers/RepoList
     case FETCH_SUCCESS: {
       return {
         ...state,
         loading: false,
         error: action.error,
         data: state.data.concat(action.data),
-        nextPage: action.nextPage + 1,
-        isLastPage: action.isLastPage,
+        nextPage: action.nextPage,
+        isLastPage: action.nextPage === null ? true : false,
       };
     }
     default:
