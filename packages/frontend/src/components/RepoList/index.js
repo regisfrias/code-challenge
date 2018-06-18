@@ -11,7 +11,7 @@ const languageColors = {
   other: '#949494',
 };
 const RepoList = props => {
-  const { data, username } = props;
+  const { data, username, isLastPage } = props;
 
   const repos = data.map((repo, key) => (
     <div key={key}>
@@ -29,7 +29,9 @@ const RepoList = props => {
     <div>
       <h1>{username} — repos</h1>
       {repos}
-      <button onClick={props.fetchMore}>Load more</button>
+      {!isLastPage ? (
+        <button onClick={props.fetchMore}>Load more</button>
+      ) : null}
     </div>
   );
 };

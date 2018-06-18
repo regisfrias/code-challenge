@@ -13,10 +13,11 @@ const fetchError = error => ({
   error,
 });
 
-const fetchSuccess = ({ nextPage, data }) => ({
+const fetchSuccess = ({ nextPage, data, isLastPage }) => ({
   type: FETCH_SUCCESS,
   nextPage,
   data,
+  isLastPage,
 });
 
 /**
@@ -31,18 +32,36 @@ export const fetchUserRepos = username => async (dispatch, getState) => {
   // https://developer.github.com/v3/guides/traversing-with-pagination/
   // parse-link-header package looks nice?
 
-  console.log('state.nextPage', state.nextPage);
-
   dispatch(fetchStart());
 
   try {
     fetch(
-      `https://api.github.com/users/${username}/repos?access_token=${token}&per_page=4&page=${
+      `https://api.github.com/users/${username}/repos?access_token=${token}&sort=created&per_page=4&page=${
         state.nextPage
       }`,
     )
-      .then(res => res.json())
-      .then(data => dispatch(fetchSuccess({ nextPage: state.nextPage, data })));
+      .then(res => {
+        let isLastPage = false;
+
+        for (const value of res.headers.values()) {
+          if (value.indexOf('first') >= 0) {
+            isLastPage = true;
+          }
+        }
+
+        return { data: res.json(), isLastPage };
+      })
+      .then(res =>
+        res.data.then(data =>
+          dispatch(
+            fetchSuccess({
+              nextPage: state.nextPage,
+              data: data,
+              isLastPage: res.isLastPage,
+            }),
+          ),
+        ),
+      );
   } catch (error) {
     dispatch(fetchError(error.message));
   }
