@@ -9,9 +9,11 @@ class RepoListContainer extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserRepos(this.props.username));
   }
+
   fetchMore = () => {
     this.props.dispatch(fetchUserRepos(this.props.username));
   };
+
   render() {
     const { loading, error, data, username, ...rest } = this.props;
 
@@ -55,7 +57,11 @@ RepoListContainer.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  username: state.username,
+  data: state.RepoList.data,
+  loading: state.RepoList.loading,
+  nextPage: state.RepoList.nextPage,
+  isLastPage: state.RepoList.isLastPage,
+  error: state.RepoList.error,
 });
 
 export default connect(mapStateToProps)(RepoListContainer);

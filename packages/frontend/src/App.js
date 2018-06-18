@@ -6,8 +6,8 @@ import RepoList from './containers/RepoList';
 import ErrorBoundary from './components/ErrorBoundary';
 import reducers from './reducers';
 
-const middleware = [thunk];
 const initialState = {};
+const middleware = [thunk];
 
 const store = createStore(
   reducers,
@@ -22,7 +22,7 @@ const store = createStore(
 const App = () => (
   <Provider store={store}>
     <ErrorBoundary>
-      <RepoList username="petetnt" />
+      <RepoList username="regisfrias" />
     </ErrorBoundary>
   </Provider>
 );

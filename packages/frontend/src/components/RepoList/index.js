@@ -11,8 +11,21 @@ const languageColors = {
   other: '#949494',
 };
 const RepoList = props => {
-  // @TODO
-  throw new Error('Implement the repo list according to the layout');
+  const { data } = props;
+
+  const repos = data.map(repo => (
+    <div key={repo.id}>
+      <h2>
+        <a src={repo.html_url} target="_blank">
+          {repo.name}
+        </a>
+      </h2>
+      <p>{repo.description}</p>
+      <p>{repo.language}</p>
+    </div>
+  ));
+
+  return <div>{repos}</div>;
 };
 
 RepoList.propTypes = {

@@ -27,7 +27,12 @@ export default (state = initialState, action) => {
     // @TODO: Implement FETCH_SUCCESS handler. On success, you should apply proper loading/error
     // states, and adjust the other data/variables needed for the container in containers/RepoList
     case FETCH_SUCCESS: {
-      throw new Error('Not implemented');
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+        data: action.data,
+      };
     }
     default:
       return state;

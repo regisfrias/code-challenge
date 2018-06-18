@@ -6,7 +6,7 @@ import mockData from './__mocks__/data';
 
 const mockStore = configureMockStore([thunk]);
 
-const username = 'petetnt';
+const username = 'regisfrias';
 
 // @TODO - Configure fetchMock to reply with mockData for queries to
 // https://api.github.com/users/${username}/repos endpoint

@@ -24,19 +24,21 @@ const fetchSuccess = ({ nextPage, data }) => ({
  * @param { string } username - username to fetch
  */
 export const fetchUserRepos = username => async (dispatch, getState) => {
-  dispatch(fetchStart());
-  // @TODO: I might want to use `fetch` for this...
-  // @TODO: I need a GitHub API key as for this to work in .env...
-  // https://developer.github.com/apps/building-oauth-apps/
+  const { REACT_APP_GITHUB_OAUTH_TOKEN: token } = process.env;
+
   // @TODO: We must handle pagination too...
   // https://developer.github.com/v3/guides/traversing-with-pagination/
   // parse-link-header package looks nice?
   // @TODO we want to get the `nextPage` from state?
 
-  const { REACT_APP_GITHUB_API_KEY: token } = process.env;
+  dispatch(fetchStart());
 
   try {
-    throw new Error('Not implemented (actions/RepoList/index.js)');
+    fetch(
+      `https://api.github.com/users/${username}/repos?access_token=${token}&per_page=4`,
+    )
+      .then(res => res.json())
+      .then(data => dispatch(fetchSuccess({ nextPage: 2, data })));
   } catch (error) {
     dispatch(fetchError(error.message));
   }
