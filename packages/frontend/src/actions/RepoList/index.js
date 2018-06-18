@@ -25,6 +25,7 @@ const fetchSuccess = ({ nextPage, data }) => ({
  */
 export const fetchUserRepos = username => async (dispatch, getState) => {
   const { REACT_APP_GITHUB_OAUTH_TOKEN: token } = process.env;
+  const state = getState().RepoList;
 
   // @TODO: We must handle pagination too...
   // https://developer.github.com/v3/guides/traversing-with-pagination/
@@ -35,7 +36,9 @@ export const fetchUserRepos = username => async (dispatch, getState) => {
 
   try {
     fetch(
-      `https://api.github.com/users/${username}/repos?access_token=${token}&per_page=4`,
+      `https://api.github.com/users/${username}/repos?access_token=${token}&per_page=4&page=${
+        state.nextPage
+      }`,
     )
       .then(res => res.json())
       .then(data => dispatch(fetchSuccess({ nextPage: 2, data })));

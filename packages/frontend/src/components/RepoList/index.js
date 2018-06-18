@@ -11,7 +11,8 @@ const languageColors = {
   other: '#949494',
 };
 const RepoList = props => {
-  const { data } = props;
+  const { data, username } = props;
+  console.log(props);
 
   const repos = data.map(repo => (
     <div key={repo.id}>
@@ -25,7 +26,13 @@ const RepoList = props => {
     </div>
   ));
 
-  return <div>{repos}</div>;
+  return (
+    <div>
+      <h1>{username} — repos</h1>
+      {repos}
+      <button onClick={props.fetchMore}>Load more</button>
+    </div>
+  );
 };
 
 RepoList.propTypes = {

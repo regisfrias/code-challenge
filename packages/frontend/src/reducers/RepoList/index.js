@@ -4,7 +4,7 @@ const initialState = {
   loading: true,
   error: null,
   data: [],
-  nextPage: null,
+  nextPage: 1,
   isLastPage: false,
 };
 
@@ -31,7 +31,8 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
-        data: action.data,
+        data: state.data.concat(action.data),
+        nextPage: action.nextPage++,
       };
     }
     default:
