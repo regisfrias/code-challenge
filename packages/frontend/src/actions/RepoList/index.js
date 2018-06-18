@@ -1,5 +1,3 @@
-import parseLinkHeaders from 'parse-link-header';
-
 export const FETCH_START = '@fetch/start';
 export const FETCH_ERROR = '@fetch/error';
 export const FETCH_SUCCESS = '@fetch/success';
@@ -28,18 +26,14 @@ export const fetchUserRepos = username => async (dispatch, getState) => {
   const { REACT_APP_GITHUB_OAUTH_TOKEN: token } = process.env;
   const state = getState().RepoList;
 
-  // @TODO: We must handle pagination too...
-  // https://developer.github.com/v3/guides/traversing-with-pagination/
-  // parse-link-header package looks nice?
-
   dispatch(fetchStart());
 
+  const url = `https://api.github.com/users/${username}/repos?access_token=${token}&sort=created&per_page=4&page=${
+    state.nextPage
+  }`;
+
   try {
-    fetch(
-      `https://api.github.com/users/${username}/repos?access_token=${token}&sort=created&per_page=4&page=${
-        state.nextPage
-      }`,
-    )
+    fetch(url)
       .then(res => {
         let isLastPage = false;
 
