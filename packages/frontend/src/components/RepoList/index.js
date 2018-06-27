@@ -16,7 +16,7 @@ const RepoList = props => {
   const repos = data.map((repo, key) => (
     <div key={key}>
       <h2>
-        <a src={repo.html_url} target="_blank">
+        <a href={repo.html_url} className="repo_name" target="_blank">
           {repo.name}
         </a>
       </h2>
@@ -27,10 +27,12 @@ const RepoList = props => {
 
   return (
     <div>
-      <h1>{username} — repos</h1>
+      <h1>{username} – repos</h1>
       {repos}
       {!isLastPage ? (
-        <button onClick={props.fetchMore}>Load more</button>
+        <button className="load_more" onClick={props.fetchMore}>
+          Load more
+        </button>
       ) : null}
     </div>
   );

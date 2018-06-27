@@ -4,7 +4,7 @@ const initialState = {
   loading: true,
   error: null,
   data: [],
-  nextPage: 1,
+  nextPage: null,
   isLastPage: false,
 };
 

@@ -14,15 +14,15 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION__(),
+    // window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    //   window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
 
 const App = () => (
   <Provider store={store}>
     <ErrorBoundary>
-      <RepoList username="regisfrias" />
+      <RepoList username="petetnt" />
     </ErrorBoundary>
   </Provider>
 );

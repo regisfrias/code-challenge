@@ -26,30 +26,23 @@ const fetchSuccess = ({ nextPage, data }) => ({
 export const fetchUserRepos = username => async (dispatch, getState) => {
   const { REACT_APP_GITHUB_OAUTH_TOKEN: token } = process.env;
   const state = getState().RepoList;
+  const url = `https://api.github.com/users/${username}/repos?access_token=${token}&page=1`;
 
   dispatch(fetchStart());
 
-  const url = `https://api.github.com/users/${username}/repos?access_token=${token}&sort=created&per_page=4&page=${
-    state.nextPage
-  }`;
-
-  const linkHeader = '<' + url + '>; rel="next"';
-
-  const parsed = parseLinkHeaders(linkHeader);
-
   try {
-    fetch(parsed.next.url)
-      .then(res => res.json())
-      .then(data => {
-        const nextPage =
-          data.length > 0 ? parseInt(parsed.next.page) + 1 : null;
-        dispatch(
-          fetchSuccess({
-            nextPage,
-            data: data,
-          }),
-        );
-      });
+    const response = await fetch(state.nextPage ? state.nextPage : url);
+    const { headers } = response;
+    const data = await response.json();
+    const { next } = parseLinkHeaders(headers.get('Link'));
+    const nextPage = next ? next.url : null;
+
+    dispatch(
+      fetchSuccess({
+        nextPage,
+        data: data,
+      }),
+    );
   } catch (error) {
     dispatch(fetchError(error.message));
   }

@@ -4,13 +4,25 @@ import thunk from 'redux-thunk';
 import { FETCH_START, fetchUserRepos } from './';
 import mockData from './__mocks__/data';
 
+import 'isomorphic-fetch';
+
+const { REACT_APP_GITHUB_OAUTH_TOKEN: token } = process.env;
 const mockStore = configureMockStore([thunk]);
 
-const username = 'regisfrias';
+const username = 'petetnt';
 
-// @TODO - Configure fetchMock to reply with mockData for queries to
-// https://api.github.com/users/${username}/repos endpoint
-fetchMock.get(/**/);
+const url = `https://api.github.com/users/${username}/repos?access_token=${token}&page=1`;
+
+let headers = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+  Link: '<' + url + '&page=2>; rel="next"',
+};
+
+fetchMock.get(url, {
+  body: mockData,
+  headers: headers,
+});
 
 const store = mockStore({
   RepoList: {
@@ -29,6 +41,6 @@ test('fetching repos first sets state to loading', async () => {
 });
 
 test('successful fetch sets nextPage to Link header value', async () => {
-  // @TODO: implement this test
-  throw new Error('Not implemented (actions/RepoList/RepoList.test.js)');
+  await store.dispatch(fetchUserRepos(username));
+  expect(store.getActions()[2].nextPage).toEqual(expect.anything());
 });

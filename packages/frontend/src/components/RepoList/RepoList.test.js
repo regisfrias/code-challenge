@@ -34,27 +34,35 @@ beforeEach(() => {
 });
 
 it('renders a title', () => {
-  const title /* @TODO Get the title */ = expect(title.text()).toEqual(
-    'petetnt – repos',
-  );
+  const title = Elem.find('h1');
+  expect(title.text()).toEqual('petetnt – repos');
 });
 
 it('renders a repo names', () => {
-  const names /* @TODO Get the reoo name */ = expect(names.length).toEqual(2);
+  const names = Elem.find('h2');
+  expect(names.length).toEqual(2);
   expect(names.at(0).text()).toEqual('Test');
   expect(names.at(1).text()).toEqual('Test 2');
 });
 
 it('renders repo names as a link', () => {
-  throw new Error('test not implemented');
+  expect(Elem.find('.repo_name')).not.toHaveLength(0);
 });
 
 it('renders load more button if there is more to load', () => {
-  const button = Elem.find(Button);
-
+  const button = Elem.find('.load_more');
   expect(button.length).toEqual(1);
 });
 
 it('does not renders load more button if there is nothing to load', () => {
-  throw new Error('test not implemented');
+  const LastElem = mount(
+    <RepoList
+      data={data}
+      username="petetnt"
+      fetchMore={jest.fn()}
+      isLastPage={true}
+    />,
+  );
+  const button = LastElem.find('.load_more');
+  expect(button.length).toEqual(0);
 });
