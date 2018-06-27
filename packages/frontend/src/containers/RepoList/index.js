@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchUserRepos } from '../../actions';
 import RepoList from '../../components/RepoList';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import styled from 'styled-components';
 
 class RepoListContainer extends Component {
   componentDidMount() {

@@ -13,20 +13,45 @@ const languageColors = {
 const RepoList = props => {
   const { data, username, isLastPage } = props;
 
-  const repos = data.map((repo, key) => (
-    <div key={key}>
-      <h2>
-        <a href={repo.html_url} className="repo_name" target="_blank">
-          {repo.name}
-        </a>
-      </h2>
-      <p>{repo.description}</p>
-      <p>{repo.language}</p>
-    </div>
-  ));
+  const repos = data.map((repo, key) => {
+    const ColorTag = styled.a`
+      display: inline-block;
+      border-radius: 100px;
+      margin: 0 6px 0 0;
+      width: 15px;
+      height: 15px;
+
+      ${props => `
+        background: ${
+          languageColors[repo.language]
+            ? languageColors[repo.language]
+            : languageColors.other
+        };
+      `};
+    `;
+    return (
+      <div key={key}>
+        <h2>
+          <a href={repo.html_url} className="repo_name" target="_blank">
+            {repo.name}
+          </a>
+        </h2>
+        <p>{repo.description}</p>
+        <p>
+          <ColorTag />
+          {repo.language}
+        </p>
+      </div>
+    );
+  });
+
+  const Wrapper = styled.div`
+    margin: 1em auto 5em;
+    max-width: 680px;
+  `;
 
   return (
-    <div>
+    <Wrapper>
       <h1>{username} – repos</h1>
       {repos}
       {!isLastPage ? (
@@ -34,7 +59,7 @@ const RepoList = props => {
           Load more
         </button>
       ) : null}
-    </div>
+    </Wrapper>
   );
 };
 
